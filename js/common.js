@@ -2,13 +2,20 @@
 // so that absolute asset paths keep working wherever the site is deployed
 // (e.g. /blog/ or /Ovilia-blog/).
 var SITE_ROOT = (function () {
-    var script = document.currentScript;
-    if (!script) {
+    var src = '';
+    if (document.currentScript && document.currentScript.src) {
+        src = document.currentScript.src;
+    } else {
+        // Fallback: look for the <script> tag that loads this very file.
         var scripts = document.getElementsByTagName('script');
-        script = scripts[scripts.length - 1];
+        for (var i = scripts.length - 1; i >= 0; --i) {
+            if (scripts[i].src && /\/common(\.min)?\.js(\?.*)?$/.test(scripts[i].src)) {
+                src = scripts[i].src;
+                break;
+            }
+        }
     }
-    var src = (script && script.src) ? script.src : '';
-    return src.replace(/\/js\/[^\/]*$/, '');
+    return src.replace(/\/js\/[^\/?#]*(\?.*)?$/, '');
 })();
 
 setTimeout(loadMusic, 1000);
