@@ -1,3 +1,16 @@
+// Root URL of this site, resolved from the <script> tag that loaded this file,
+// so that absolute asset paths keep working wherever the site is deployed
+// (e.g. /blog/ or /Ovilia-blog/).
+var SITE_ROOT = (function () {
+    var script = document.currentScript;
+    if (!script) {
+        var scripts = document.getElementsByTagName('script');
+        script = scripts[scripts.length - 1];
+    }
+    var src = (script && script.src) ? script.src : '';
+    return src.replace(/\/js\/[^\/]*$/, '');
+})();
+
 setTimeout(loadMusic, 1000);
 function loadMusic() {
     if ($('#music-content')) {
@@ -33,7 +46,7 @@ function processPageView(rows) {
     $('.post-block').each(function() {
         var myPath = $(this).children('h2').children('a').attr('href');
         if (myPath) {
-            myPath = myPath.slice('http://zhangwenli.com'.length);
+            myPath = myPath.slice(SITE_ROOT.length);
             var len = rows.length;
             var cnt = 0;
             for (var i = 0; i < len; ++i) {
@@ -55,9 +68,9 @@ function processPageView(rows) {
     });
 }
 
-LazyLoad.css('/blog/css/font.css');
+LazyLoad.css(SITE_ROOT + '/css/font.css');
 
-LazyLoad.js('/blog/js/jquery-1.11.1.min.js', function () {
+LazyLoad.js(SITE_ROOT + '/js/jquery-1.11.1.min.js', function () {
     hideRecentSectionWhenNoPost();
 
     $('h1').each(function() {
@@ -72,12 +85,12 @@ LazyLoad.js('/blog/js/jquery-1.11.1.min.js', function () {
     });
 
     if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) === false) {
-        LazyLoad.js('/blog/js/jquery.timeago.min.js', function () {
+        LazyLoad.js(SITE_ROOT + '/js/jquery.timeago.min.js', function () {
             $('.timeago').timeago().show();
         });
     }
 
-    LazyLoad.js('/blog/js/unviel.min.js', function () {
+    LazyLoad.js(SITE_ROOT + '/js/unviel.min.js', function () {
         $("img").unveil();
 
         // // google pageview
@@ -122,8 +135,8 @@ LazyLoad.js('/blog/js/jquery-1.11.1.min.js', function () {
 
 // emoji
 setTimeout(function() {
-    LazyLoad.css('/blog/css/emojify.min.css', function () {
-        LazyLoad.js('/blog/js/emojify.min.js', function () {
+    LazyLoad.css(SITE_ROOT + '/css/emojify.min.css', function () {
+        LazyLoad.js(SITE_ROOT + '/js/emojify.min.js', function () {
             emojify.setConfig({
                 emoticons_enabled: true,
                 people_enabled: true,
