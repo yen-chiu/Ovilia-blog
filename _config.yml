@@ -1,9 +1,9 @@
 name: "Blog of Wenli Zhang"
 description: "Web Front-End Blog by Wenli Zhang"
 
-url: "http://zhangwenli.com/blog"
-loadingImg: "http://zhangwenli.com/blog/img/loading.gif"
-filePath: "http://zhangwenli.com/blog/img/"
+url: "https://yenchiu.com/Ovilia-blog"
+loadingImg: "https://yenchiu.com/Ovilia-blog/img/loading.gif"
+filePath: "https://yenchiu.com/Ovilia-blog/img"
 
 timezone: Asia/Shanghai
 
@@ -17,5 +17,13 @@ highlighter: rouge
 
 permalink: pretty
 
-gems:
+plugins:
 - jekyll-paginate
+
+exclude:
+- gulpfile.js
+- package.json
+- package-lock.json
+- README.md
+- .gitignore
+- .gitattributes
